@@ -21,7 +21,7 @@ jobs:
 
     - name: SonarQube Scan
       run: |
-          -Dsonar.host.url=https://5746-103-81-78-10.ngrok-free.app:9000 \
+          -Dsonar.host.url=https://5746-103-81-78-10.ngrok-free.app
           -Dsonar.login=$SONAR_TOKEN
           -Dsonar.sonar.projectKey=sonar_git_yml:master
           -Dsonar.sonar.projectName=sonar_git_yml:master
