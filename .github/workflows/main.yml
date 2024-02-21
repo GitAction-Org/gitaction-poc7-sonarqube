@@ -1,0 +1,31 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: SonarQube Scan
+      run: |
+        ./gradlew sonarqube \
+          -Dsonar.host.url=https://5746-103-81-78-10.ngrok-free.app:9000 \
+          -Dsonar.login=$SONAR_TOKEN
+          -Dsonar.sonar.projectKey=sonar_git_yml:master
+          -Dsonar.sonar.projectName=sonar_git_yml:master
+          -Dsonar.sonar.sources=.
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
