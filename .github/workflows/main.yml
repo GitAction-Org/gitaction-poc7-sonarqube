@@ -1,30 +1,37 @@
-name: SonarQube Analysis
+name: SonarQube Scan
 
 on:
   push:
     branches:
-      - main
+      - main  # You can change this to the branch you want to trigger the analysis on
 
 jobs:
-  sonarqube:
-    runs-on: ubuntu-latest
+  sonarqube-analysis:
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK
+    - name: Set up Java
       uses: actions/setup-java@v2
       with:
         distribution: 'adopt'
         java-version: '11'
 
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Set up SonarQube Scanner
+      run: |
+        echo "D:\\sonar-scanner-4.0.0.1744-windows\\bin" >> $GITHUB_PATH
+        
     - name: SonarQube Scan
       run: |
-          -Dsonar.host.url=https://5746-103-81-78-10.ngrok-free.app
-          -Dsonar.login=$SONAR_TOKEN
-          -Dsonar.sonar.projectKey=sonar_git_yml:master
-          -Dsonar.sonar.projectName=sonar_git_yml:master
-          -Dsonar.sonar.sources=.
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        # Run SonarQube analysis
+        D:\\sonar-scanner-4.0.0.1744-windows\\bin\\sonar-scanner.bat \
+          -Dsonar.host.url=https://94a3-103-81-78-10.ngrok-free.app \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.projectKey=sonar_git_yml:master \
+          -Dsonar.projectName=sonar_git_yml:master \
+          -Dsonar.sources=.
