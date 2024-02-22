@@ -20,7 +20,7 @@ jobs:
         projectBaseDir: .
         args: >
           -Dsonar.organization=gitaction_poc7_sonarqube_new
-          -Dsonar.projectKey=gitaction-poc7-sonarqube-key
+          -Dsonar.projectKey=gitaction-poc7-sonarqube
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
