@@ -19,7 +19,7 @@ jobs:
       with:
         projectBaseDir: .
         args: >
-          -Dsonar.organization=GitAction-Org
+          -Dsonar.organization=onkarko
           -Dsonar.projectKey=gitaction_sonarqube
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
