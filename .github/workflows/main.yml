@@ -20,7 +20,7 @@ jobs:
         projectBaseDir: .
         args: >
           -Dsonar.organization=GitAction-Org
-          -Dsonar.projectKey=my-Java-web-app
+          -Dsonar.projectKey=gitaction_sonarqube
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
