@@ -1,35 +1,27 @@
-name: SonarQube Scan
-
 on:
+  # Trigger analysis when pushing in master or pull requests, and when creating
+  # a pull request. 
   push:
     branches:
-      - main  # You can change this to the branch you want to trigger the analysis on
+      - master
+      - main
+  pull_request:
+      types: [opened, synchronize, reopened]
 
+name: SonarQube Scan
 jobs:
-  sonarqube-analysis:
-    runs-on: windows-latest
-
+  sonarqube:
+    name: SonarQube Trigger
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Java
-      uses: actions/setup-java@v2
+    - name: Checking out
+      uses: actions/checkout@master
       with:
-        distribution: 'adopt'
-        java-version: '11'
-
-
-    - name: Set up SonarQube Scanner
-      run: |
-        echo "D:\\sonar-scanner-4.0.0.1744-windows\\bin" >> $env:Path
-        
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
     - name: SonarQube Scan
-      run: |
-        # Run SonarQube analysis
-        cmd /c "D:\\sonar-scanner-4.0.0.1744-windows\\bin\\sonar-scanner.bat" ^
-          -Dsonar.host.url=https://5746-103-81-78-10.ngrok-free.app ^
-          -Dsonar.login=$SONAR_TOKEN ^
-          -Dsonar.projectKey=sonar_git_yml:master ^
-          -Dsonar.projectName=sonar_git_yml:master ^
-          -Dsonar.sources=.
+      uses: kitabisa/sonarqube-action@v1.2.0
+      with:
+        host: ${{ secrets.SONARQUBE_HOST }}
+        login: ${{ secrets.SONARQUBE_TOKEN }}
+        projectKey: Github-Action-Scan
