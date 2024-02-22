@@ -19,9 +19,6 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Build with Maven
-      run: mvn clean install
-
     - name: Set up SonarQube Scanner
       run: |
         echo "D:\\sonar-scanner-4.0.0.1744-windows\\bin" >> $GITHUB_PATH
